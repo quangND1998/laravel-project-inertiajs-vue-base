@@ -47,4 +47,9 @@ class User extends Authenticatable
             return [$pr['name'] => true];
         });
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

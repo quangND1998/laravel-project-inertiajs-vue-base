@@ -3,6 +3,11 @@ require('./bootstrap');
 import Vue from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
+import PortalVue from 'portal-vue'
+import InfiniteLoading from 'vue-infinite-loading';
+import VueChatScroll from 'vue-chat-scroll'
+import VueMapbox from "vue-mapbox";
+import Mapbox from "mapbox-gl";
 createInertiaApp({
     resolve: name => require(`./Pages/${name}`),
     setup({ el, App, props, plugin }) {
@@ -18,7 +23,15 @@ Vue.mixin({
         route: window.route,
     }
 })
+Vue.use(InfiniteLoading, {
+    /* options */
+});
+Vue.use(VueChatScroll)
 Vue.mixin(require('./base'))
+Vue.use(PortalVue)
+
+
+Vue.use(VueMapbox, { mapboxgl: Mapbox });
 Vue.mixin({
     methods: {
         hasAnyPermission: function(permissions) {
@@ -44,7 +57,7 @@ Vue.mixin({
 
     },
 })
-
+window.Bus = new Vue();
 InertiaProgress.init({
     delay: 250,
     color: '#1E377F',
